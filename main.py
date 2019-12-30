@@ -1,17 +1,18 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
+from addEditCoffeeForm import Ui_MainWindow as SEcond
+from MainWidget import Ui_MainWindow as FIrst
 import sys
 import sqlite3
 
 
-con = sqlite3.connect('coffee.db')
+con = sqlite3.connect('data/coffee.db')
 cur = con.cursor()
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, FIrst):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.edit)
         self.pushButton_2.clicked.connect(self.refresh)
         res = cur.execute("""select * from coffee""")
@@ -47,10 +48,10 @@ class Example(QMainWindow):
             self.tableWidget.setItem(j, 6, QTableWidgetItem(str(i[6])))
 
 
-class AddWindow(QMainWindow):
+class AddWindow(QMainWindow, SEcond):
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.add)
         self.pushButton_2.clicked.connect(self.dl)
 
